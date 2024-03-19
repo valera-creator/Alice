@@ -57,6 +57,7 @@ def handle_dialog(request_dict, response):
                 "Не хочу!",
                 "Не буду!",
                 "Отстань!",
+                "Неее!"
             ]
         }
 
@@ -70,6 +71,17 @@ def handle_dialog(request_dict, response):
                 'text'] = 'Слона можно найти на Яндекс.Маркете! \nhttps://market.yandex.ru/search?text=слон'
             response['response']['end_session'] = True
             return
+        elif request_dict['request']['original_utterance'].lower() in ['помощь']:
+            response['response'][
+                'text'] = 'Навык пытается убедить купить слона. \n' \
+                          'Для согласия можно написать "ладно", "куплю", "покупаю", "хорошо".'
+            response['response']['buttons'] = get_suggests(user_id)
+            print(sessionStorage)
+
+        elif 'что ты умеешь' in request_dict['request']['original_utterance'].lower():
+            response['response'][
+                'text'] = "Я умею настойчиво убеждать купить слона, купи слона!"
+            response['response']['buttons'] = get_suggests(user_id)
         else:
             response['response']['text'] = \
                 f"Все говорят '{request_dict['request']['original_utterance']}', а ты купи слона!"
