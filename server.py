@@ -76,7 +76,6 @@ def handle_dialog(request_dict, response):
                 'text'] = 'Навык пытается убедить купить слона. \n' \
                           'Для согласия можно написать "ладно", "куплю", "покупаю", "хорошо".'
             response['response']['buttons'] = get_suggests(user_id)
-            print(sessionStorage)
 
         elif 'что ты умеешь' in request_dict['request']['original_utterance'].lower():
             response['response'][
