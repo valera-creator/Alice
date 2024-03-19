@@ -61,7 +61,7 @@ def handle_dialog(request_dict, response):
             ]
         }
 
-        response['response']['text'] = 'Привет! Купи слона!'
+        response['response']['text'] = 'Салюют! Купи слона!'
         response['response']['buttons'] = get_suggests(user_id)
         return
 
@@ -74,7 +74,7 @@ def handle_dialog(request_dict, response):
         elif request_dict['request']['original_utterance'].lower() in ['помощь']:
             response['response'][
                 'text'] = 'Навык пытается убедить купить слона. \n' \
-                          'Для согласия можно написать "ладно", "куплю", "покупаю", "хорошо".'
+                          'Для согласия можно написать: "ладно", "куплю", "покупаю", "хорошо".'
             response['response']['buttons'] = get_suggests(user_id)
 
         elif 'что ты умеешь' in request_dict['request']['original_utterance'].lower():
@@ -101,8 +101,18 @@ def get_suggests(user_id):
     session['suggests'] = session['suggests'][1:]
     sessionStorage[user_id] = session
 
-    # Если осталась только одна подсказка, предлагаем подсказку со ссылкой на Яндекс.Маркет.
-    if len(suggests) < 2:
+    suggests.append({
+        'title': 'Помощь',
+        'hide': True
+    })
+
+    suggests.append({
+        'title': 'Что ты умеешь?',
+        'hide': True
+    })
+
+    # предлагаем подсказку со ссылкой на Яндекс.Маркет.
+    if len(suggests) < 4:
         suggests.append({
             "title": "Ладно",
             "url": "https://market.yandex.ru/search?text=слон",
